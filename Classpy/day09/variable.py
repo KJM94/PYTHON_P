@@ -1,0 +1,42 @@
+# 경로
+# -*- coding: utf-8 -*
+import numpy as np
+
+class Variable:
+    def __init__(self, data):
+        # ndarray만 취급
+        if data is not None:
+            if not isinstance(data, np.ndarray):
+                raise TypeError('{}은(는) 지원하지 않습니다.'.format(type(data)))
+
+        self.data = data # 순전파 관련 데이터
+        self.grad = None
+
+        # creator 역전파 자동화를 구현하기 위한 인스턴스 변수
+        self.creator = None
+
+    def set_creator(self, func):
+        self.creator = func
+    '''
+    # 역전파 자동화 구현 함수
+    def backward(self):
+        f = self.creator # 함수 가져오기
+        # creator가 None이면 역전파 중단
+        if f is not None:
+            x = f.input # 함수의 입력
+            x.grad = f.backward(self.grad) # 각 함수의 backward 메서드 호출
+            x.backward() # 하나 앞 변수의 backward 메서드를 호출합니다. (재귀)
+    '''
+    # 반복문으로 수정
+    def backward(self):
+        if self.grad is None:
+            self.grad = np.ones_like(self.data)
+
+        funcs = [self.creator]
+        while funcs:
+            f = funcs.pop() # 함수를 가져온다.
+            x, y = f.input, f.output # 함수의 입력과 출력
+            x.grad = f.backward(y.grad) # backward 메서드 호출
+
+            if x.creator is not None:
+                funcs.append(x.creator) #
