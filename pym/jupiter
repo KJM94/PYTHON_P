@@ -1,0 +1,19 @@
+import torch
+print(torch.__version__)
+
+import cv2
+print(cv2.__version__)
+
+import skimage
+print(skimage.__version__)
+
+import numpy as np
+
+data = [[1, 2], [3, 4]]
+x_data = torch.tensor(data)
+
+print(x_data)
+
+import cv2 as cv
+flags = [i for i in dir(cv) if i.startswith('COLOR_')]
+print(flags)
