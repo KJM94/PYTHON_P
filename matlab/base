@@ -1,0 +1,197 @@
+import timeit
+
+import numpy as np
+
+# a = np.array([0.1, 0.2, 0.3])
+# print(a)
+#
+# print(a.dtype)
+#
+# b = [1, 2, 3]
+#
+# x = np.array(b)
+#
+# print(x)
+# print(x.dtype)
+# print(x[0], type(x[0]))
+#
+# c = np.array([1, 2, 3], dtype=np.float64)
+#
+# d = np.array([1.99, 2.5, 3.3, 5.2])
+# print(d.dtype)
+#
+# e = d.astype(np.uint8)
+# print(e, e.dtype)
+#
+# A = np.array([[1, 2, 3], [4, 5, 6]])
+# print(A, A.dtype)
+# print(type(A))
+# print(A.ndim)
+#
+# print(A.shape)
+#
+# print(A.itemsize)
+#
+# print(A.data)
+#
+# g = np.array([1, 2, 3, 4, 5, 6])
+# print("max :", g.max(), "min : ", g.min())
+# print("sum : ", g.sum(), "mean : ", g.mean())
+#
+# h = np.array([[1, 2], [3, 4]])
+# print("max : ", h.max(axis=0))
+# print("max(col): ", h.max(axis=0))
+# print("max(row): ", h.max(axis=1))
+# print("min(col): ", h.min(axis=0))
+# print("min(row): ", h.min(axis=1))
+
+# A = np.array([1, 2, 3])
+# print(A.ndim)
+# print(A.shape)
+#
+# B = np.array([[1, 2], [3, 4]])
+# print(B.ndim)
+# print(B.shape)
+#
+# C = np.array([[[1, 2, 3], [4, 5, 6]], [[3, 1, 2], [4, 2, 3]]])
+# print(C.ndim)
+# print(C.shape)
+# print(C)
+#
+#
+# A = np.array([1, 2, 3])
+# print(A, A.shape)
+# print(A[0], A[1], A[2])
+#
+# B = np.array([[1, 2, 3], [4, 5, 6]])
+# print(B[0, 0], B[0, 1], B[0, 2], B[1, 0])
+#
+# C = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+# print(C)
+# print(C[0, 1, 1], C[1, 1, 2])
+#
+# D = np.array(12).reshape(2, 2, 3)
+# D = D=1
+# D = np.array([[[1, 2, 3], [4, 5, 6], [[7, 8, 9], [10, 11, 12]]]])
+# print(D)
+
+# print(timeit.timeit('[i**2 for i in A]', setup= 'A=range(100)'))
+# print(timeit.timeit('B**2', setup= 'import numpy as np; B=np.arange(100)'))
+
+# A = np.zeros((2, 3))
+# print(A, A.dtype)
+#
+# B = np.ones((2, 3))
+# print(B, B.dtype)
+#
+# C = np.empty((2, 3))
+# print(C, C.dtype)
+#
+# D = np.random.random((2, 3))*10
+# D = np.astype(np.uint8)
+# print(D, D.dtype)
+
+# A = np.zeros((2, 3), dtype=np.uint8)
+# B = np.ones((2, 3), dtype=np.uint8)
+# print(A.dtype, B.dtype)
+
+# A = np.arange(20)
+# print(A)
+#
+# A = np.arange(1, 21)
+# print(A)
+#
+# A = np.linspace(0, 10)
+# print(A)
+#
+#
+# A= np.arange(0,16)
+# B= A.reshape(8,2)
+# C= A.reshape(4,4)
+#
+# print(A,A.dtype)
+#
+# print(B,B.dtype)
+#
+# print(C,C.dtype)
+
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[1, 0], [1, 0]])
+print(A)
+print(B)
+C = np.vstack((A, B))
+print(C)
+C = np.hstack((A, B))
+print(C)
+
+C = np.concatenate((A, B), axis=0)
+print(C)
+
+A = np.arange(18).reshape(3, -1)
+print(A)
+B = np.hsplit(A, 3)
+print(B)
+print(B[0])
+print(B[1])
+print(B[2])
+
+B = np.hsplit(A, (2, 5))
+print(B)
+
+B = np.vsplit(A, (2, 5))
+print(B)
+
+A = np.arange(10).reshape(2, 5)
+print(A)
+print(A[1, 3])
+
+A = np.arange(30).reshape(6, -1)
+
+print(A)
+
+for row in A:
+    print(row)
+
+for row in A.T:
+    print(row)
+
+for a in A.flat:
+    print(a)
+
+a = np.arange(12)
+b = a
+a[0] = 5
+b[9] = -1
+b.shape = 3, 4
+print(a)
+print(b)
+
+print(b.base is a)
+print(a is b)
+
+a = np.arange(12)
+b = a.vlew()
+a[0] = 100
+a.resize(3, 4)
+b.shape(2, 6)
+print(a)
+print(b)
+
+a = np.arange(12)
+b = a.copy()
+
+print(a == b)
+print(b.base is a)
+print(a is b)
+
+# A = np.arange(10, 130, 10).reshape(3, 4)
+# print(A)
+# B = np.arange(1, 5)
+# print(B)
+# print(A + B)
+
+A = np.arange(10, 130, 10).reshape(3, 4)
+print(A)
+B = 5
+print(B)
+print(A + B)
