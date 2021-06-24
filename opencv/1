@@ -1,0 +1,10 @@
+import cv2
+
+# 이미지 불러오기 (상대경로)
+# "C:\\Users\\hkit\\PycharmProjects\\OpenCvProj\\balloon.jpg"
+# "C:/Users/hkit/PycharmProjects/OpenCvProj/balloon.jpg"
+img_src = cv2.imread("balloon.jpg", cv2.IMREAD_COLOR)
+
+cv2.imshow("Source", img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
