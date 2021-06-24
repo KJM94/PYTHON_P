@@ -1,0 +1,381 @@
+import timeit
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# I = np.eye(3)
+# print(I)
+
+A = np.arange(1, 10).reshape(3, 3)
+x = np.array([0.1, 0.2, 0.3])
+
+print(np.dot(A, x))
+
+# A = np.arange(1, 5).reshape(2, 2)
+# print(A)
+#
+# invA = np.linalg.inv(A)
+# print(invA)
+
+# A = np.arange(1, 10).reshape(3, 3)
+# print(A)
+#
+# print((np.dot(A, I) == A).all())
+# print((np.dot(I, A) == A).all())
+
+# A = np.array([[1, 2, 3], [4, 5, 6]])
+# B = np.array([[4, 1], [5, 2], [1, 2]])
+#
+# print(A)
+# print(B)
+#
+# print(A.dot(B))
+# print(np.dot(A, B))
+
+# a = np.array([4, 1])
+# ca = np.multiply(a, 3)
+#
+# # c = 3
+# # print(a+c)
+# # print(np.multiply(a, c))
+#
+#
+#
+# # # 벡터 [ 4 3 ] ^T
+# # a = np.array([4, 3])
+# #
+# #
+# fig = plt.figure()
+# ax = fig.add_subplot(1, 1, 1)
+#
+#
+# # 원점에서 시작하는 벡터 a를 그립니다.
+# ax.quiver(0, 0, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+# ax.text(a[0], a[1], 'a', size=15)
+#
+# # (0,1)에서 시작하는 벡터 a를 그립니다.
+# ax.quiver(0, 1, ca[0], ca[1], angles='xy', scale_units='xy', scale=1)
+# ax.text(ca[0], ca[1]+1, '3a', size=15, color='blue')
+#
+# # # 원점에서 시작하는 벡터 sum를 그립니다.
+# # ax.quiver(0, 0, sum[0], sum[1], angles='xy', scale_units='xy', scale=1)
+# # ax.text(sum[0]*0.5, sum[1]*0.5, 'sum', size=15, color="blue")
+#
+# start = 0
+# end = 7
+#
+# ax.set_xticks(range(-2, 15))
+# ax.set_yticks(range(-3, 8))
+# ax.grid()
+# ax.set_axisbelow(True)
+# ax.set_aspect('equal', adjustable='box')
+#
+#
+# ax.spines['left'].set_position('zero')
+# ax.spines['bottom'].set_position('zero')
+# ax.spines['right'].set_color('none')
+# ax.spines['top'].set_color('none')
+#
+# plt.show()
+
+# 벡터 [ 4 3 ] ^T
+# a = np.array([4, 3])
+#
+#
+# fig = plt.figure()
+# ax = fig.add_subplot(1, 1, 1)
+#
+#
+# # 원점에서 시작하는 벡터 a를 그립니다.
+# ax.quiver(0, 0, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+#
+# # (0, -3)에서 시작하는 벡터 a를 그립니다.
+# ax.quiver(0, -3, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+#
+# # (1, 2)에서 시작하는 벡터 a를 그립니다.
+# ax.quiver(1, 2, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+#
+# # (-3, 1)에서 시작하는 벡터 a를 그립니다.
+# ax.quiver(-3, 1, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+#
+#
+#
+# start = -5
+# end = 10
+#
+# ax.set_xticks(range(start, end))
+# ax.set_yticks(range(start, end))
+# ax.grid()
+# ax.set_axisbelow(True)
+# ax.set_aspect('equal', adjustable='box')
+#
+#
+# ax.spines['left'].set_position('zero')
+# ax.spines['bottom'].set_position('zero')
+# ax.spines['right'].set_color('none')
+# ax.spines['top'].set_color('none')
+#
+# plt.show()
+
+# a = np.arange(12)
+# a = a.reshape(3, 4)
+# print(a)
+# b = a.T
+# print(b)
+
+# a = np.array([4, 3])
+# #b = np.array([1, -2])
+#
+# #f,ax = plt.subplots(1, 2)
+#
+# fig = plt.figure()
+# ax = fig.add_subplot(1, 1, 1)
+#
+# ax.quiver(0, 0, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+# ax.text(a[0], a[1], 'a', size=15)
+#
+# ax.set_xticks(range(0,7))
+# ax.set_yticks(range(0,7))
+# ax.grid()
+# ax.set_axisbelow(True)
+# ax.set_aspect('equal',adjustable='box')
+#
+# ax.spines['left'].set_position('zero')
+# ax.spines['bottom'].set_position('zero')
+# ax.spines['right'].set_color('none')
+# ax.spines['top'].set_color('none')
+
+# ax = fig.add_subplot(1, 1, 1)
+# ax[0].title.set_text('A')
+# ax[1].title.set_text('B')
+#
+# #ax.scatter(a[0], a[1], s = 30)
+# ax[0].quiver(0, 0, a[0], a[1], angles='xy', scale_units='xy', scale=1)
+# ax[1].quiver(0, 0, b[0], b[1], angles='xy', scale_units='xy', scale=1)
+#
+# start_x = -1
+# end_x = 5
+# start_y = -3
+# end_y = 4
+#
+# for i in range(2):
+#     ax[i].axis([start_x, end_x, start_y, end_y])
+#     ax[i].set_xticks(range(start_x, end_x))
+#     ax[i].set_yticks(range(start_y, end_y))
+#     ax[i].grid(True)
+#     ax[i].set_aspect('equal', adjustable='box')
+
+
+
+# ax.text(a[0]+0.2, a[1]+0.2, 'a', size=15)
+#
+# ax.set_xticks(range(-5, 6))
+# ax.set_yticks(range(-5, 6))
+#
+# ax.grid()
+# ax.set_axisbelow(True)
+#
+# ax.set_aspect('equal', adjustable='box')
+#
+# ax.spines['left'].set_position('zero')
+# ax.spines['bottom'].set_position('zero')
+#
+# ax.spines['right'].set_color('none')
+# ax.spines['top'].set_color('none')
+
+#plt.show()
+
+
+# a = np.array([0.1, 0.2, 0.3])
+# print(a)
+#
+# print(a.dtype)
+#
+# b = [1, 2, 3]
+#
+# x = np.array(b)
+#
+# print(x)
+# print(x.dtype)
+# print(x[0], type(x[0]))
+#
+# c = np.array([1, 2, 3], dtype=np.float64)
+#
+# d = np.array([1.99, 2.5, 3.3, 5.2])
+# print(d.dtype)
+#
+# e = d.astype(np.uint8)
+# print(e, e.dtype)
+#
+# A = np.array([[1, 2, 3], [4, 5, 6]])
+# print(A, A.dtype)
+# print(type(A))
+# print(A.ndim)
+#
+# print(A.shape)
+#
+# print(A.itemsize)
+#
+# print(A.data)
+#
+# g = np.array([1, 2, 3, 4, 5, 6])
+# print("max :", g.max(), "min : ", g.min())
+# print("sum : ", g.sum(), "mean : ", g.mean())
+#
+# h = np.array([[1, 2], [3, 4]])
+# print("max : ", h.max(axis=0))
+# print("max(col): ", h.max(axis=0))
+# print("max(row): ", h.max(axis=1))
+# print("min(col): ", h.min(axis=0))
+# print("min(row): ", h.min(axis=1))
+
+# A = np.array([1, 2, 3])
+# print(A.ndim)
+# print(A.shape)
+#
+# B = np.array([[1, 2], [3, 4]])
+# print(B.ndim)
+# print(B.shape)
+#
+# C = np.array([[[1, 2, 3], [4, 5, 6]], [[3, 1, 2], [4, 2, 3]]])
+# print(C.ndim)
+# print(C.shape)
+# print(C)
+#
+#
+# A = np.array([1, 2, 3])
+# print(A, A.shape)
+# print(A[0], A[1], A[2])
+#
+# B = np.array([[1, 2, 3], [4, 5, 6]])
+# print(B[0, 0], B[0, 1], B[0, 2], B[1, 0])
+#
+# C = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+# print(C)
+# print(C[0, 1, 1], C[1, 1, 2])
+#
+# D = np.array(12).reshape(2, 2, 3)
+# D = D=1
+# D = np.array([[[1, 2, 3], [4, 5, 6], [[7, 8, 9], [10, 11, 12]]]])
+# print(D)
+
+# print(timeit.timeit('[i**2 for i in A]', setup= 'A=range(100)'))
+# print(timeit.timeit('B**2', setup= 'import numpy as np; B=np.arange(100)'))
+
+# A = np.zeros((2, 3))
+# print(A, A.dtype)
+#
+# B = np.ones((2, 3))
+# print(B, B.dtype)
+#
+# C = np.empty((2, 3))
+# print(C, C.dtype)
+#
+# D = np.random.random((2, 3))*10
+# D = np.astype(np.uint8)
+# print(D, D.dtype)
+
+# A = np.zeros((2, 3), dtype=np.uint8)
+# B = np.ones((2, 3), dtype=np.uint8)
+# print(A.dtype, B.dtype)
+
+# A = np.arange(20)
+# print(A)
+#
+# A = np.arange(1, 21)
+# print(A)
+#
+# A = np.linspace(0, 10)
+# print(A)
+#
+#
+# A= np.arange(0,16)
+# B= A.reshape(8,2)
+# C= A.reshape(4,4)
+#
+# print(A,A.dtype)
+#
+# print(B,B.dtype)
+#
+# print(C,C.dtype)
+
+# A = np.array([[1, 2], [3, 4]])
+# B = np.array([[1, 0], [1, 0]])
+# print(A)
+# print(B)
+# C = np.vstack((A, B))
+# print(C)
+# C = np.hstack((A, B))
+# print(C)
+#
+# C = np.concatenate((A, B), axis=0)
+# print(C)
+#
+# A = np.arange(18).reshape(3, -1)
+# print(A)
+# B = np.hsplit(A, 3)
+# print(B)
+# print(B[0])
+# print(B[1])
+# print(B[2])
+#
+# B = np.hsplit(A, (2, 5))
+# print(B)
+#
+# B = np.vsplit(A, (2, 5))
+# print(B)
+#
+# A = np.arange(10).reshape(2, 5)
+# print(A)
+# print(A[1, 3])
+#
+# A = np.arange(30).reshape(6, -1)
+#
+# print(A)
+#
+# for row in A:
+#     print(row)
+#
+# for row in A.T:
+#     print(row)
+#
+# for a in A.flat:
+#     print(a)
+#
+# a = np.arange(12)
+# b = a
+# a[0] = 5
+# b[9] = -1
+# b.shape = 3, 4
+# print(a)
+# print(b)
+#
+# print(b.base is a)
+# print(a is b)
+#
+# a = np.arange(12)
+# b = a.vlew()
+# a[0] = 100
+# a.resize(3, 4)
+# b.shape(2, 6)
+# print(a)
+# print(b)
+#
+# a = np.arange(12)
+# b = a.copy()
+#
+# print(a == b)
+# print(b.base is a)
+# print(a is b)
+#
+# # A = np.arange(10, 130, 10).reshape(3, 4)
+# # print(A)
+# # B = np.arange(1, 5)
+# # print(B)
+# # print(A + B)
+#
+# A = np.arange(10, 130, 10).reshape(3, 4)
+# print(A)
+# B = 5
+# print(B)
+# print(A + B)
