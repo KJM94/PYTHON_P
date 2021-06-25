@@ -1,0 +1,24 @@
+import cv2
+
+capture = cv2.VideoCapture('aespa.mp4')
+while cv2. waitKey(33) < 0:
+    if capture.get(cv2.CAP_PROP_POS_FRAMES) == capture.get(cv2.CAP_PROP_FRAME_COUNT):
+        capture.get(cv2.CAP_PROP_POS_FRAMES,0)
+    ret, frame = capture.read() # 비디오에서는 frame이 img_src와 같은 데이터 이다.
+
+    height, width = frame.shape[:2]
+
+    frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    frame_h, frame_s, frame_v = cv2.split(frame_hsv)
+
+    frame_h = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    hsv_mask1 = cv2.inRange(frame_hsv, (20, 0, 0), (40, 0, 0))
+    hsv_mask2 = cv2.inRange(frame_hsv, (20, 0, 0), (180, 255, 254))
+    hsv_mask_add = cv2.addWeighted(hsv_mask1, 1.0, hsv_mask2, 1.0, 0.0)
+    frame_red = cv2.bitwise_and(frame_hsv, frame_hsv, frame_h, mask=hsv_mask_add)
+    frame_red = cv2.cvtColor(frame_red, cv2.COLOR_HSV2BGR)
+
+    cv2.imshow('Video', frame_red)
+
+capture.release()
+cv2.destroyAllWindows()
