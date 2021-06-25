@@ -1,0 +1,265 @@
+import cv2
+import numpy as np
+
+img_src = cv2.imread('tomato.jpg', cv2.IMREAD_COLOR)
+height, width = img_src.shape[:2]
+
+img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+#                                h: 0~180  s: 0~255  v: 0~255
+#                           (hmin,smin,vmin),(hmax,smax,vmax)
+mask_red1 = cv2.inRange(img_hsv, (0,100,100), (6,255,255))
+mask_red2 = cv2.inRange(img_hsv, (165,100,100), (180,255,255))
+mask_add = cv2.addWeighted(mask_red1, 1.0, mask_red2, 1.0, 0.0)
+img_red = cv2.bitwise_and(img_hsv, img_hsv, mask=mask_add)
+img_red = cv2.cvtColor(img_red, cv2.COLOR_HSV2BGR)
+img_gray = cv2.cvtColor(img_red, cv2.COLOR_BGR2GRAY)
+ret, img_binary = cv2.threshold(img_gray, 50, 255, cv2.THRESH_OTSU)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+img_binary = cv2.morphologyEx(img_binary, cv2.MORPH_OPEN, kernel, iterations=1)
+
+contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+
+for i, contour in enumerate(contours):
+    if cv2.contourArea(contour) > 10000 :
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        cv2.putText(img_src, "RED", (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0,0, 255), 1)
+
+# find Orange
+mask_orange = cv2.inRange(img_hsv, (8,100,100), (25,255,255))
+img_orange = cv2.bitwise_and(img_hsv, img_hsv, mask=mask_orange)
+img_orange = cv2.cvtColor(img_orange, cv2.COLOR_HSV2BGR)
+img_gray = cv2.cvtColor(img_orange, cv2.COLOR_BGR2GRAY)
+ret, img_binary = cv2.threshold(img_gray, 50, 255, cv2.THRESH_OTSU)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+img_binary = cv2.morphologyEx(img_binary, cv2.MORPH_OPEN, kernel, iterations=1)
+
+contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+
+for i, contour in enumerate(contours):
+    if cv2.contourArea(contour) > 10000 :
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src, (x, y), (x + w, y + h), (39,127, 255), 2)
+        cv2.putText(img_src, "ORANGE", (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.8, (39,127, 255), 1)
+
+# find Yellow
+mask_yellow = cv2.inRange(img_hsv, (25,100,100), (40 ,255,255))
+img_yellow = cv2.bitwise_and(img_hsv, img_hsv, mask=mask_yellow)
+img_yellow = cv2.cvtColor(img_yellow, cv2.COLOR_HSV2BGR)
+img_gray = cv2.cvtColor(img_yellow, cv2.COLOR_BGR2GRAY)
+ret, img_binary = cv2.threshold(img_gray, 50, 255, cv2.THRESH_OTSU)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+img_binary = cv2.morphologyEx(img_binary, cv2.MORPH_OPEN, kernel, iterations=1)
+
+contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+
+for i, contour in enumerate(contours):
+    if cv2.contourArea(contour) > 10000 :
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src, (x, y), (x + w, y + h), (0,255, 255), 2)
+        cv2.putText(img_src, "YELLOW", (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0,255 , 255), 1)
+
+# find Green
+mask_green =cv2.inRange(img_hsv, (40,0,0), (70 ,255,255))
+img_green = cv2.bitwise_and(img_hsv, img_hsv, mask=mask_green)
+img_green = cv2.cvtColor(img_green, cv2.COLOR_HSV2BGR)
+img_gray = cv2.cvtColor(img_green, cv2.COLOR_BGR2GRAY)
+ret, img_binary = cv2.threshold(img_gray, 50, 255, cv2.THRESH_OTSU)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+img_binary = cv2.morphologyEx(img_binary, cv2.MORPH_OPEN, kernel, iterations=1)
+
+contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+
+for i, contour in enumerate(contours):
+    if cv2.contourArea(contour) > 10000 :
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(img_src, "GREEN", (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.8, (0,255 , 0), 1)
+
+# find Blue
+mask_blue =cv2.inRange(img_hsv, (90 ,50 ,50), (120 ,255,255))
+img_blue = cv2.bitwise_and(img_hsv, img_hsv, mask=mask_blue)
+img_blue = cv2.cvtColor(img_blue, cv2.COLOR_HSV2BGR)
+img_gray = cv2.cvtColor(img_blue, cv2.COLOR_BGR2GRAY)
+ret, img_binary = cv2.threshold(img_gray, 50, 255, cv2.THRESH_OTSU)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+img_binary = cv2.morphologyEx(img_binary, cv2.MORPH_OPEN, kernel, iterations=1)
+
+contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+
+for i, contour in enumerate(contours):
+    if cv2.contourArea(contour) > 10000 :
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        cv2.putText(img_src, "BLUE", (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 0), 1)
+
+# find Pupple
+mask_pupple =cv2.inRange(img_hsv, (130 ,50 ,50), (165 ,255,255))
+img_pupple = cv2.bitwise_and(img_hsv, img_hsv, mask=mask_pupple)
+img_pupple = cv2.cvtColor(img_pupple, cv2.COLOR_HSV2BGR)
+img_gray = cv2.cvtColor(img_pupple, cv2.COLOR_BGR2GRAY)
+ret, img_binary = cv2.threshold(img_gray, 50, 255, cv2.THRESH_OTSU)
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+img_binary = cv2.morphologyEx(img_binary, cv2.MORPH_OPEN, kernel, iterations=1)
+
+contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
+
+for i, contour in enumerate(contours):
+    if cv2.contourArea(contour) > 10000 :
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src, (x, y), (x + w, y + h), (255, 0, 255), 2)
+        cv2.putText(img_src, "PUPPLE", (x,y-10), cv2.FONT_HERSHEY_COMPLEX, 0.8, (255, 0, 255), 1)
+
+cv2.imshow("src", img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+
+
+
+
+# cv2.line(img_src, start, end, color, thickness)
+
+#img_src = cv2.imread('tomato.jpg', cv2.IMREAD_COLOR)
+
+#width = 800
+#height = 600
+#channel = 3
+
+#height, width = img_src.shape[:2]
+# img_src = np.zeros((height, width, channel), dtype=np.uint8)
+
+#pt1 = (int(80), int(216))
+#pt2 = (int(413), int(503))
+#line_color = (255, 255, 0)
+#thick_line = 2
+# cv2.rectangle(img_src, (80, 216), (413, 503), (0, 0, 255), 2)
+# cv2.rectangle(img_src, (323, 91), (650, 401), (41, 107, 254), 2)
+# cv2.rectangle(img_src, (529, 104), (894, 436), (90, 233, 248), 2)
+# cv2.rectangle(img_src, (784, 171), (1122, 478), (19, 53, 6), 2)
+# cv2.rectangle(img_src, (1175, 139), (1518, 467), (118, 35, 0), 2)
+# cv2.rectangle(img_src, (1425, 219), (1791, 551), (111, 14, 150), 2)
+
+#cv2.circle(img_src, (int(width/2), int(height/2)), 100, (0, 255, 0), -1)
+
+# cv2.putText(img_src, "Red", (80, 206), cv2.FONT_HERSHEY_PLAIN, 2, \
+#             (0, 0, 255), 2)
+# cv2.putText(img_src, "Orange", (323, 81), cv2.FONT_HERSHEY_PLAIN, 2, \
+#             (41, 107, 254), 2)
+# cv2.putText(img_src, "Yellow", (529, 94), cv2.FONT_HERSHEY_PLAIN, 2, \
+#             (90, 233, 248), 2)
+# cv2.putText(img_src, "Green", (786, 161), cv2.FONT_HERSHEY_PLAIN, 2, \
+#             (19, 53, 6), 2)
+# cv2.putText(img_src, "Blue", (1175, 129), cv2.FONT_HERSHEY_PLAIN, 2, \
+#             (118, 35, 0), 2)
+# cv2.putText(img_src, "Pupple", (1425, 209), cv2.FONT_HERSHEY_PLAIN, 2, \
+#             (111, 14, 150), 2)
+
+#img_src = np.ones((height, width, channel), dtype=np.uint8)
+#img_src = img_src * 255
+#cv2.line(img_src, (0, 0), (width-1, height-1), (0, 255, 255), 2)
+#cv2.line(img_src, (0, height-1), (width-1, 0), (0, 255, 255), 2)
+
+#cv2.imwrite("Line_sample.jpg", img_src)
+
+#cv2.imshow("src", img_src)
+#cv2.waitKey()
+#cv2.destroyAllWindows()
+
+# img_src = cv2.imread('fruits.png', cv2.IMREAD_COLOR)
+# height, width = img_src.shape[:2]
+# img_gray_1ch = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
+# img_gray_3ch = cv2.cvtColor(img_gray_1ch, cv2.COLOR_GRAY2BGR)
+#
+# zero = np.zeros((height, width, 1), dtype=np.uint8)
+#
+# img_b, img_g, img_r = cv2.split(img_src)
+#
+# img_src_b = cv2.merge((img_b, zero, zero))
+# img_src_g = cv2.merge((zero, img_g, zero))
+# img_src_r = cv2.merge((zero, zero, img_r))
+#
+# #cv2.imshow('zero', zero)
+# cv2.imshow("src", img_src)
+# cv2.imshow("b", img_src_b)
+# cv2.imshow("g", img_src_g)
+# cv2.imshow("r", img_src_r)
+# #cv2.imshow("1ch", img_gray_1ch)
+# #cv2.imshow("3ch", img_gray_3ch)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+# img_src = cv2.imread("capcom.png", cv2.IMREAD_COLOR)
+# height, width = img_src.shape[:2]
+# print(height, width)
+#
+# # 이미지를 BGR 색공간에서 HSV로 변환
+# img_hsv = cv2.cvtColor(img_src, cv2.COLOR_BGR2HSV)
+# img_h, img_s, img_v = cv2.split(img_hsv)
+#
+#
+# # img_h = cv2.inRange(img_h, 105, 150)
+# img_h = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
+# hsv_mask1 = cv2.inRange(img_hsv, (20, 0, 0), (30, 0, 0))
+# hsv_mask2 = cv2.inRange(img_hsv, (20, 0, 0), (180, 255, 254))
+# hsv_mask_add = cv2.addWeighted(hsv_mask1, 1.0, hsv_mask2, 1.0, 0.0)
+# img_red = cv2.bitwise_and(img_hsv, img_hsv, img_h, mask=hsv_mask_add)
+# img_red = cv2.cvtColor(img_red, cv2.COLOR_HSV2BGR)
+#
+# # img_blue = cv2.bitwise_and(img_hsv, img_hsv, img_h)
+# # img_blue = cv2.cvtColor(img_blue, cv2.COLOR_HSV2BGR)
+#
+# # cv2.imshow("H", img_h)
+# # cv2.imshow("s", img_s)
+# # cv2.imshow("v", img_v)
+#
+# cv2.imshow("src", img_src)
+# cv2.imshow("red", img_red)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+
+# img_src = cv2.imread("fruits.png", cv2.IMREAD_COLOR)
+# height, width = img_src.shape[:2]
+#
+# img_blur = cv2.blur(img_src, (5, 5), anchor=(-1, -1), borderType=cv2.BORDER_DEFAULT)
+#
+# cv2.imshow("blur", img_blur)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+# img_gray = cv2.cvtColor(img_src,cv2.COLOR_BGR2GRAY)
+#
+# #이진화
+#
+# img_binary1 = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 15, 2)
+# img_binary2 = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 15, 2)
+# # ret, img_binary2 = cv2.threshold(img_gray, 100, 255, cv2.THRESH_TRIANGLE)
+#
+#
+# #이미지 저장
+# # cv2.imwrite("파일경로/파일이름, 저장할 이미지")
+# # 작업환경 아래에 figure폴더에 이미지 파일을 저장
+# cv2.imwrite("figure/fruits_gray.png", img_gray)
+#
+# #cv2.imshow("src", img_src)
+# #cv2.imshow("gray", img_gray)
+# cv2.imshow("binary1", img_binary1)
+# cv2.imshow("binary2", img_binary2)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+# img_src = cv2.imread("balloon.jpg", cv2.IMREAD_COLOR)
+# height, width = img_src.shape[:2]
+#
+# w_q1 = int(width/4); w_q3 = int(width*3/4)
+# h_q1 = int(height/4); h_q3 = int(height*3/4)
+#
+# img_crop = img_src[w_q1:w_q3, h_q1:h_q3].copy()# 높이(rows) 너비(cols)
+# img_crop = cv2.cvtColor(img_crop, cv2.COLOR_BGR2GRAY)
+# img_crop = cv2.cvtColor(img_crop, cv2.COLOR_GRAY2BGR)
+#
+# img_src[w_q1:w_q3, h_q1:h_q3] = img_crop
+#
+# cv2.imshow("src", img_src)
+# cv2.imshow("crp", img_crop)
