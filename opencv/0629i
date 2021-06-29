@@ -1,0 +1,33 @@
+import cv2
+import numpy as np
+
+# cv2.imread가 한글 지원하지 않으므로 새로운 방식으로 파일 조합
+def imread(filename, flags=cv2.IMREAD_COLOR, dtype=np.uint8):
+    try:
+        n = np.fromfile(filename, dtype)
+        img = cv2.imdecode(n, flags)
+        return img
+    except Exception as e:
+        print(e)
+        return None
+
+# OPENCV가 한글을 지원하지 않으므로 numpy를 사용하여 한글파일명 그림파일 로드
+img_src = imread('PCB1/2번 L50_OK.bmp')
+
+cv2.imshow('src', img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+# import cv2
+# import numpy as np
+#
+# # OPENCV가 한글을 지원하지 않으므로 numpy를 사용하여 한글파일명 그림파일 로드
+# n = np.fromfile('PCB1/2번 L50_OK.bmp', dtype=np.uint8)
+# img_src = cv2.imdecode(n, cv2.IMREAD_COLOR)
+#
+#
+#
+# cv2.imshow('src', img_src)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+#
