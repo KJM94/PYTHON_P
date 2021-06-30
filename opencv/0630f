@@ -1,0 +1,128 @@
+import cv2
+import numpy as np
+
+capture = cv2.VideoCapture('race.mp4')
+
+while cv2.waitKey(33) < 0:
+    if capture.get(cv2.CAP_PROP_POS_FRAMES) == capture.get(cv2.CAP_PROP_FRAME_COUNT):
+        capture.get(cv2.CAP_PROP_POS_FRAMES, 0)
+    ret, frame = capture.read()
+
+    trap_bottom_width = 0.85
+    trap_top_width = 0.075
+    trap_height = 0.43
+
+    def region_of_interest(frame):
+        frame_mask = np.zeros_like(frame)
+
+        if frame.ndim > 2:  # color영상이면
+            channel_count = frame.shape[2]
+            ignore_mask_color = (255, 255, 255)
+        else:
+            ignore_mask_color = 255
+
+        imshape = frame.shape
+        vertices = np.array([[ \
+            ((imshape[1] * (1 - trap_bottom_width)) // 2, imshape[0]), \
+            ((imshape[1] * (1 - trap_top_width)) // 2, imshape[0] - imshape[0] * trap_height), \
+            (imshape[1] - (imshape[1] * (1 - trap_top_width)) // 2, imshape[0] - imshape[0] * trap_height), \
+            (imshape[1] - (imshape[1] * (1 - trap_bottom_width)) // 2, imshape[0])]] \
+            , dtype=np.int32)
+
+        cv2.fillPoly(frame_mask, vertices, ignore_mask_color)
+
+        frame = cv2.bitwise_and(frame, frame_mask)
+        return frame
+
+    if __name__ == '__main__':
+        frame = cv2.imread("line.png", cv2.IMREAD_COLOR)
+
+
+        frame_gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+        frame_gray = cv2.GaussianBlur(frame_gray, (5,5), 0)
+
+        frame_canny = cv2.Canny(frame_gray, 95, 200)
+        frame_canny = region_of_interest(frame_canny)
+
+        rho = 2
+        theta = 1 * np.pi/180
+        threshold = 15
+        min_line_len = 10
+        max_line_gap = 20
+
+        lines = cv2.HoughLinesP(frame_canny, rho, theta, threshold, np.array([]), \
+                                minLineLength=min_line_len, maxLineGap=max_line_gap)
+
+        for i, line in enumerate(lines):
+            cv2.line(frame, (line[0][0],line[0][1]),(line[0][2],line[0][3]), \
+                    (0,255,0), 2)
+
+    cv2.imshow("src",frame)
+
+    # trap_bottom_width = 0.7
+    # trap_top_width = 0.08
+    # trap_height = 0.5
+    #
+    # # White 뽑아내기
+    # white_thr = 200
+    # lower_white = np.array([white_thr, white_thr, white_thr])
+    # upper_white = np.array([255, 255, 255])
+    # white_mask = cv2.inRange(frame, lower_white, upper_white)
+    # white_image = cv2.bitwise_and(frame, frame, mask=white_mask)
+    #
+    # # Yellow 뽑아내기
+    # frame_hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    # lower_yellow = np.array([19, 95, 95])
+    # upper_yellow = np.array([42, 255, 255])
+    # yellow_mask = cv2.inRange(frame_hsv, lower_yellow, upper_yellow)
+    # yellow_image = cv2.bitwise_and(frame_hsv, frame, mask=yellow_mask)
+    #
+    # mixed_frame = cv2.addWeighted(white_image, 1.0, yellow_image, 1.0, 0.0)
+    #
+    # frame_mask = np.zeros_like(mixed_frame)
+    #
+    # if mixed_frame.ndim > 2: #color영상이면
+    #     channel_count = mixed_frame.shape[2]
+    #     ignore_mask_color = (255, 255, 255)
+    # else:
+    #     ignore_mask_color = 255
+    #
+    # imshape = mixed_frame.shape
+    # vertices = np.array([[ \
+    #     ((imshape[1] * (1 - trap_bottom_width)) // 2, imshape[0]), \
+    #     ((imshape[1] * (1 - trap_top_width)) // 2, imshape[0] - imshape[0] * trap_height), \
+    #     (imshape[1] - (imshape[1] * (1 - trap_top_width)) // 2, imshape[0] - imshape[0] * trap_height), \
+    #     (imshape[1] - (imshape[1] * (1 - trap_bottom_width)) // 2, imshape[0])]] \
+    #     , dtype=np.int32)
+    #
+    # cv2.fillPoly(mixed_frame, vertices, ignore_mask_color)
+    #
+    # mixed_frame = cv2.bitwise_and(mixed_frame, frame_mask)
+    #
+    # frame_blur = cv2.GaussianBlur(mixed_frame, (3,3), 0)
+    #
+    # cv2.imshow('Video', frame_blur)
+
+    # frame_gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+    #
+    # frame_canny = cv2.Canny(frame_gray, 60, 150)
+    #
+    # cv2.imshow('dst', frame_canny)
+
+    # frame_laplacian = cv2.Laplacian(frame_gray, cv2.CV_8U, ksize=3)
+    # frame_laplacian = cv2.convertScaleAbs(frame_laplacian)
+    #
+    # cv2.imshow('Video', frame_laplacian)
+
+    # frame1 = cv2.Sobel(frame_gray, cv2.CV_8U, 0, 1, 3)
+    # frame2 = cv2.Sobel(frame_gray, cv2.CV_8U, 1, 0, 3)
+    #
+    # abs_grad_x = cv2.convertScaleAbs(frame1)
+    # abs_grad_y = cv2.convertScaleAbs(frame2)
+    #
+    # frame_sobel = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+    #
+    # cv2.imshow('Video', frame_sobel)
+
+capture.release()
+cv2.destroyAllWindows()
