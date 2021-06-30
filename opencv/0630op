@@ -1,0 +1,48 @@
+import cv2
+import numpy as np
+
+img_src = cv2.imread("Bikesgray.jpg", cv2.IMREAD_COLOR)
+img_gray = cv2.cvtColor(img_src, cv2.COLOR_RGB2GRAY)
+#
+#노이즈 제거
+img_gray = cv2.GaussianBlur(img_gray, (3,3), 0) # 마스크의 크기가 커지면 블러가 강화됨(더 흐릿해짐)
+
+# 캐니 에지 구하기
+img_canny = cv2.Canny(img_gray, 60, 150)
+
+cv2.imshow('dst',img_canny)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+# 라플라시안 필터
+# img_laplacian = cv2.Laplacian(img_gray, cv2.CV_8U, ksize=3)
+# img_laplacian = cv2.convertScaleAbs(img_laplacian)
+
+# cv2.imshow('src',img_laplacian)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+# import cv2
+# import numpy as np
+#
+# img_src = cv2.imread("Bikesgray.jpg", cv2.IMREAD_COLOR)
+# img_gray = cv2.cvtColor(img_src, cv2.COLOR_RGB2GRAY)
+# #
+# #노이즈 제거
+# img_gray = cv2.GaussianBlur(img_gray, (3,3), 0)
+#
+#
+#
+# # 소벨 필터 적용
+# img_sobel1 = cv2.Sobel(img_gray, cv2.CV_8U, 0, 1, 3)
+# img_sobel2 = cv2.Sobel(img_gray, cv2.CV_8U, 1, 0, 3)
+#
+#
+# abs_grad_x = cv2.convertScaleAbs(img_sobel1)
+# abs_grad_y = cv2.convertScaleAbs(img_sobel2)
+#
+# img_sobel = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+#
+# cv2.imshow('src', img_sobel)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
