@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 
-
 img_src = cv2.imread('line.png', cv2.IMREAD_COLOR)
 
 height, width = img_src.shape[:2]
