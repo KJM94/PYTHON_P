@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 trap_bottom_width = 0.85
 trap_top_width = 0.075
 trap_height = 0.43
