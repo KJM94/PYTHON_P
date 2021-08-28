@@ -12,7 +12,6 @@ x1, y1 = x
 print(x1, y1)
 
 
-
 fig = plt.figure()
 ax = fig.add_subplot(1, 1, 1)
 
