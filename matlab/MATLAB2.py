@@ -12,7 +12,6 @@ img_zero[0:int(height), 0:int(width),:] = img_dst
 M  = np.array([[1,0,int(width/4)],[0,1,int(height/4)]], dtype=float)
 img_dst = cv2.warpAffine(img_zero, M, (width, height))
 
-
 #img_result = cv2.hconcat([img_src, img_zero])
 cv2.imshow("dst", img_dst)
 cv2.waitKey()
