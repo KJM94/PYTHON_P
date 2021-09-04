@@ -7,6 +7,7 @@ trap_top_width=0.2
 trap_height=0.3
 
 
+
 while cv2.waitKey(33)<0:
     if(capture.get(cv2.CAP_PROP_POS_FRAMES)==capture.get(cv2.CAP_PROP_FRAME_COUNT)):
         capture.set(cv2.CAP_PROP_POS_FRAMES,0)
