@@ -7,4 +7,3 @@ if __name__ == "__main__":
     print(x.data)
     x.data = np.array(5.0)
     print(x.data)
-    
