@@ -4,6 +4,7 @@ import numpy as np
 
 from variable import Variable
 
+
 class Function:
 
     def __call__(self, input):
