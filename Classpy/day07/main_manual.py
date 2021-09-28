@@ -2,7 +2,6 @@
 # 폴더명, 파일명
 
 from variable import Variable
-
 from functions import Square, Exp
 import numpy as np
 
