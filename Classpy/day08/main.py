@@ -3,6 +3,7 @@
 
 from variable import Variable
 from functions import Square, Exp
+
 import numpy as np
 
 # 중앙 차분을 이용한 수치 미분
