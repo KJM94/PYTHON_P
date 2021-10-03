@@ -4,7 +4,6 @@ import numpy as np
 
 from variable import Variable
 
-
 # 입력이 scala 타입이면 ndarray로 변환해주는 함수 작성
 def as_array(x):
     if np.isscalar(x):
