@@ -1,5 +1,6 @@
 #! /c/ProgramData/Anaconda3/envs/pythonProject/python
 # -*- coding: utf-8 -*-
+
 import unittest
 from steps.day10.variable import Variable
 from steps.day10.functions import Square, Exp
