@@ -8,6 +8,7 @@ b = np.array([-5, 12])
 x = np.linalg.solve(A, b)
 
 # 해벡터인 x를 그래프로 표현하기 위해 x1, y1로 표기합니다.
+
 x1, y1 = x
 print(x1, y1)
 
