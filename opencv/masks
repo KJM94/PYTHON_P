@@ -1,0 +1,32 @@
+import cv2
+
+## Read
+img = cv2.imread("tomato.jpg")
+
+## convert to hsv
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+## mask of green (36,0,0) ~ (70, 255,255)
+mask1 = cv2.inRange(hsv, (90, 50, 50), (120, 255,255))
+
+## mask o yellow (15,0,0) ~ (36, 255, 255)
+mask2 = cv2.inRange(hsv, (15,0,0), (36, 255, 255))
+
+mask3 = cv2.inRange(hsv, (130,50,50), (165, 255, 255))
+
+mask4 = cv2.inRange(hsv, (110,50,50), (255, 180, 255))
+
+## final mask and masked
+mask = cv2.add(mask1, mask2)
+target = cv2.bitwise_and(img,img, mask=mask)
+
+maskt = cv2.add(mask3, mask4)
+targett = cv2.bitwise_and(img,img, mask=maskt)
+
+img_target = cv2.add(target, targett)
+
+cv2.imshow('srct', mask)
+cv2.imshow('srccc', maskt)
+cv2.imshow('src', img_target)
+cv2.waitKey()
+cv2.destroyAllWindows()
