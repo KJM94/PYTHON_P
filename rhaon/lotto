@@ -1,0 +1,12 @@
+import random
+
+로또 = []
+
+while len(로또) in range(6):
+  번호 = random.randint(1,45)
+
+  if 번호 not in 로또:
+    로또.append(번호)
+
+로또.sort()
+print(로또)
